@@ -1,0 +1,14 @@
+package components
+
+import (
+    "pmdb-go/internal/database"
+
+    "strings"
+)
+
+templ MovieItem(movie database.Movie) {
+    <li class="flex justify-between my-2">
+        <span>{ movie.Title }</span>
+        <span>{ strings.Join(movie.Format, ", ") }</span>
+    </li>
+}

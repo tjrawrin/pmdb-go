@@ -1,0 +1,15 @@
+package components
+
+import (
+	"pmdb-go/internal/database"
+	"strconv"
+)
+
+templ MovieList(movies []database.Movie, count int, total int) {
+	<ul class="mb-6" id="movies-list">
+		for _, movie := range movies {
+			@MovieItem(movie)
+		}
+	</ul>
+	<span class="text-sm" hx-swap-oob="true" id="showing-subtitle">Showing { strconv.Itoa(count) } of { strconv.Itoa(total) } movies.</span>
+}

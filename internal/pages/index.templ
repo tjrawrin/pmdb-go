@@ -1,0 +1,13 @@
+package pages
+
+import "pmdb-go/internal/layout"
+
+templ IndexWithLayout() {
+	@layout.Base() {
+		@Index()
+	}
+}
+
+templ Index() {
+	<p class="text-center">Select an option above to view available movies.</p>
+}

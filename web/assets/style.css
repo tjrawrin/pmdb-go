@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	@apply bg-gray-100;
+}
+
+li span:nth-child(1) {
+	padding-right: 18px;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #131313;
+		color: #efefef;
+	}
+
+	input {
+		background-color: #090909;
+		border: 1px solid #333;
+		color: #efefef !important;
+	}
+
+	a {
+		background-color: #4c4c4c !important;
+	}
+
+	a:hover {
+		background-color: #7a7a7a !important;
+	}
+}
