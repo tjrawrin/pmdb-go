@@ -1,0 +1,22 @@
+package layouts
+
+templ NotFound() {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="utf-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<link rel="icon" href="/public/favicon.svg"/>
+			<link href={ GetAssets("/public/style.css") } rel="stylesheet"/>
+			<script defer src={ GetAssets("/public/script.js") }></script>
+			<title>pmdb-go</title>
+		</head>
+		<body>
+			<div class="max-w-2xl px-3 mx-auto min-h-screen content-center">
+				<main class="mb-6">
+					{ children... }
+				</main>
+			</div>
+		</body>
+	</html>
+}

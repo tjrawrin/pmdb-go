@@ -1,43 +1,4 @@
-package layout
-
-import (
-	"encoding/json"
-	"pmdb-go/web"
-)
-
-type ViteManifest struct {
-	WebAssetsScriptJs struct {
-		File    string `json:"file"`
-		Name    string `json:"name"`
-		Src     string `json:"src"`
-		IsEntry bool   `json:"isEntry"`
-	} `json:"web/assets/script.js"`
-	WebAssetsStyleCSS struct {
-		File    string `json:"file"`
-		Name    string `json:"name"`
-		Src     string `json:"src"`
-		IsEntry bool   `json:"isEntry"`
-	} `json:"web/assets/style.css"`
-}
-
-func getAsset(filePath string) string {
-	jsonBytes, err := web.WebFS.ReadFile("dist/.vite/manifest.json")
-	if err != nil {
-		panic("Error parsing manifest.json " + err.Error())
-	}
-	var manifest ViteManifest
-	err = json.Unmarshal(jsonBytes, &manifest)
-	if err != nil {
-		panic("Error parsing manifest.json " + err.Error())
-	}
-	if filePath == "/public/style.css" {
-		return "/public/" + manifest.WebAssetsStyleCSS.File
-	}
-	if filePath == "/public/script.js" {
-		return "/public/" + manifest.WebAssetsScriptJs.File
-	}
-	return ""
-}
+package layouts
 
 templ Base() {
 	<!DOCTYPE html>
@@ -46,8 +7,8 @@ templ Base() {
 			<meta charset="utf-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1"/>
 			<link rel="icon" href="/public/favicon.svg"/>
-			<link href={ getAsset("/public/style.css") } rel="stylesheet"/>
-			<script defer src={ getAsset("/public/script.js") }></script>
+			<link href={ GetAssets("/public/style.css") } rel="stylesheet"/>
+			<script defer src={ GetAssets("/public/script.js") }></script>
 			<title>pmdb-go</title>
 		</head>
 		<body>

@@ -28,10 +28,12 @@ func (s *FiberServer) RegisterHandlers() {
 	v1.Get("/movies", s.MovieListHandler)
 	v1.Get("/movies/random", s.MovieItemHandler)
 	v1.Post("/movies/search", s.MovieSearchHandler)
+
+	s.App.Use(s.NotFoundHandler)
 }
 
 func (s *FiberServer) IndexHandler(c *fiber.Ctx) error {
-	return Render(c, pages.IndexWithLayout())
+	return Render(c, pages.Index())
 }
 
 func (s *FiberServer) MoviesHandler(c *fiber.Ctx) error {
@@ -47,12 +49,12 @@ func (s *FiberServer) MoviesHandler(c *fiber.Ctx) error {
 			"queries": map[string]string{"view": "all"},
 		})
 	}
-	return Render(c, pages.MoviesWithLayout(movies, view, len(movies), s.DB.Total))
+	return Render(c, pages.Movies(movies, view, len(movies), s.DB.Total))
 }
 
 func (s *FiberServer) MoviesRandomHandler(c *fiber.Ctx) error {
 	movie := s.DB.GetRandomMovie()
-	return Render(c, pages.MoviesRandomWithLayout(movie))
+	return Render(c, pages.MoviesRandom(movie))
 }
 
 func (s *FiberServer) MovieListHandler(c *fiber.Ctx) error {
@@ -87,6 +89,10 @@ func (s *FiberServer) MovieSearchHandler(c *fiber.Ctx) error {
 		}
 	}
 	return Render(c, components.MovieList(filteredMovies, len(filteredMovies), s.DB.Total))
+}
+
+func (s *FiberServer) NotFoundHandler(c *fiber.Ctx) error {
+	return Render(c, pages.NotFound())
 }
 
 func Render(c *fiber.Ctx, component templ.Component) error {
